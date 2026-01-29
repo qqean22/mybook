@@ -17,21 +17,15 @@
     const $root = jQuery(root);
     $root.empty();
 
-    // Populate with <a><img /></a> items and optional select checkbox
+    // Populate with <a><img /></a> items from the provided paths
     imagePaths.forEach((src, index) => {
-      const $a = jQuery("<a/>", { href: src, "data-index": index, class: "gallery-link" });
+      const $a = jQuery("<a/>", { href: src, "data-index": index });
       const $img = jQuery("<img/>", {
         src,
         loading: "lazy",
         alt: ""
       });
-      const $cb = jQuery("<input/>", {
-        type: "checkbox",
-        class: "gallery-select-cb",
-        "data-index": index,
-        "aria-label": "Select image " + (index + 1)
-      });
-      $a.append($img).append($cb);
+      $a.append($img);
       $root.append($a);
     });
 
@@ -62,7 +56,6 @@
           <div class="lightbox-image-wrapper">
             <img class="lightbox-image" alt="" />
           </div>
-          <button type="button" class="lightbox-download" aria-label="Download image">Download</button>
         </div>
       `;
       document.body.appendChild(overlay);
@@ -89,108 +82,11 @@
       openLightbox(currentIndex + delta);
     }
 
-    function downloadImage(url, filename) {
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = filename || url.split("/").pop() || "image.jpg";
-      link.rel = "noopener";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-
-    function downloadCurrentImage() {
-      const url = imagePaths[currentIndex];
-      if (!url) return;
-      const filename = url.split("/").pop() || "image.jpg";
-      fetch(url, { mode: "cors" })
-        .then((r) => (r.ok ? r.blob() : Promise.reject(new Error("Fetch failed"))))
-        .then((blob) => {
-          const objUrl = URL.createObjectURL(blob);
-          downloadImage(objUrl, filename);
-          URL.revokeObjectURL(objUrl);
-        })
-        .catch(() => {
-          downloadImage(url, filename);
-        });
-    }
-
-    // Select mode state and toolbar
-    let selectMode = false;
-    const toolbar = document.createElement("div");
-    toolbar.className = "gallery-toolbar";
-    toolbar.innerHTML = `
-      <label class="gallery-toolbar-toggle">
-        <input type="checkbox" id="gallery-select-mode" aria-label="Select images" />
-        <span>Select images</span>
-      </label>
-      <button type="button" class="gallery-download-selected" disabled aria-label="Download selected">
-        Download selected
-      </button>
-    `;
-    root.parentElement.insertBefore(toolbar, root);
-
-    const selectModeCb = toolbar.querySelector("#gallery-select-mode");
-    const downloadSelectedBtn = toolbar.querySelector(".gallery-download-selected");
-
-    function updateDownloadSelectedState() {
-      const checked = root.querySelectorAll(".gallery-select-cb:checked");
-      downloadSelectedBtn.disabled = checked.length === 0;
-      downloadSelectedBtn.textContent = checked.length
-        ? "Download selected (" + checked.length + ")"
-        : "Download selected";
-    }
-
-    selectModeCb.addEventListener("change", () => {
-      selectMode = selectModeCb.checked;
-      root.classList.toggle("select-mode", selectMode);
-      if (!selectMode) {
-        root.querySelectorAll(".gallery-select-cb:checked").forEach((cb) => (cb.checked = false));
-        updateDownloadSelectedState();
-      }
-    });
-
-    downloadSelectedBtn.addEventListener("click", () => {
-      root.querySelectorAll(".gallery-select-cb:checked").forEach((cb) => {
-        const idx = parseInt(cb.getAttribute("data-index") || "0", 10);
-        const url = imagePaths[idx];
-        if (url) {
-          const filename = url.split("/").pop() || "image-" + idx + ".jpg";
-          fetch(url, { mode: "cors" })
-            .then((r) => (r.ok ? r.blob() : Promise.reject(new Error("Fetch failed"))))
-            .then((blob) => {
-              const objUrl = URL.createObjectURL(blob);
-              downloadImage(objUrl, filename);
-              URL.revokeObjectURL(objUrl);
-            })
-            .catch(() => downloadImage(url, filename));
-        }
-      });
-    });
-
-    root.addEventListener("change", (e) => {
-      if (e.target.classList.contains("gallery-select-cb")) updateDownloadSelectedState();
-    });
-
-    // Delegate clicks from thumbs: in select mode toggle checkbox, else open lightbox
+    // Delegate clicks from thumbs
     root.addEventListener("click", (e) => {
-      if (e.target.classList.contains("gallery-select-cb")) {
-        e.stopPropagation();
-        e.preventDefault();
-        updateDownloadSelectedState();
-        return;
-      }
-      const anchor = e.target.closest("a.gallery-link");
+      const anchor = e.target.closest("a");
       if (!anchor || !root.contains(anchor)) return;
       e.preventDefault();
-      if (selectMode) {
-        const cb = anchor.querySelector(".gallery-select-cb");
-        if (cb) {
-          cb.checked = !cb.checked;
-          updateDownloadSelectedState();
-        }
-        return;
-      }
       const index = parseInt(anchor.getAttribute("data-index") || "0", 10);
       openLightbox(index);
     });
@@ -206,8 +102,6 @@
         showNext(1);
       } else if (e.target.matches(".lightbox-prev") || e.target.closest(".lightbox-prev")) {
         showNext(-1);
-      } else if (e.target.matches(".lightbox-download") || e.target.closest(".lightbox-download")) {
-        downloadCurrentImage();
       }
     });
 

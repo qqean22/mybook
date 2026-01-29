@@ -239,100 +239,10 @@ body {
   font-size: 2.4rem;
 }
 
-.lightbox-download {
-  position: absolute;
-  bottom: 1.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 1px solid rgba(249, 250, 251, 0.6);
-  background: rgba(0, 0, 0, 0.4);
-  color: #f9fafb;
-  font-size: 0.85rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  border-radius: 2px;
-}
-
-.lightbox-download:hover {
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
-}
-
 .lightbox-close:hover,
 .lightbox-prev:hover,
 .lightbox-next:hover {
   color: #e5e7eb;
-}
-
-/* Gallery toolbar: select mode + download selected */
-.gallery-toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.gallery-toolbar-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  cursor: pointer;
-  user-select: none;
-}
-
-.gallery-toolbar-toggle input {
-  width: 1rem;
-  height: 1rem;
-  accent-color: var(--accent);
-}
-
-.gallery-download-selected {
-  border: 1px solid var(--border-subtle);
-  background: var(--page-surface);
-  color: var(--accent);
-  font-size: 0.85rem;
-  letter-spacing: 0.06em;
-  padding: 0.45rem 0.9rem;
-  cursor: pointer;
-  border-radius: 2px;
-}
-
-.gallery-download-selected:hover:not(:disabled) {
-  background: var(--accent);
-  color: var(--page-bg);
-  border-color: var(--accent);
-}
-
-.gallery-download-selected:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* Select-mode checkboxes on thumbnails */
-.justified-gallery .gallery-select-cb {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  width: 1.25rem;
-  height: 1.25rem;
-  z-index: 2;
-  opacity: 0;
-  pointer-events: none;
-  accent-color: var(--accent);
-}
-
-.justified-gallery.select-mode .gallery-select-cb {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.justified-gallery a {
-  position: relative;
 }
 
 .site-footer {
