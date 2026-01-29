@@ -68,10 +68,10 @@ body {
 
 .brand-logo {
   display: block;
-  width: 100%;
-  height: auto;
+  width: 5rem;
+  height: 3rem;
   object-fit: contain;
-  object-position: left center;
+  object-position: center center;
 }
 
 .nav {
