@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AXI STUDIO</title>
+   
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="site">
+      <header class="site-header">
+        <div class="site-header-inner">
+          <div class="brand">
+            <img src="logo/logo2.png" alt="" class="brand-logo" />
+          </div>
+        </div>
+      </header>
+
+      <main class="site-main">
+        <section class="hero">
+          <div class="hero-content">
+            <h1 class="hero-title">Somalis In Tech <br>- AI & Entrepreneurship -</h1>
+            <p class="eyebrow">Please tag and credit @axistudioldn when reposting from this gallery.</p></p>
+            <div class="hero-links">
+              <a href="https://www.instagram.com/axistudioldn" target="_blank" rel="noreferrer" class="hero-link">
+                Instagram
+              </a>
+              <a href="https://www.behance.net/axiphotography_" target="_blank" rel="noreferrer" class="hero-link">
+                Behance
+              </a>
+              <a href="https://www.linkedin.com/company/axistudioldn" target="_blank" rel="noreferrer" class="hero-link">
+                Linkedin
+              </a>
+              
+            </div>
+          </div>
+        </section>
+
+        <section id="gallery" class="gallery-section">
+          <div class="gallery-inner">
+            <div id="gallery-root" class="justified-gallery" aria-label="Photo gallery"></div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="footer-inner">
+          <div class="footer-main">
+            <span class="footer-brand">&copy; <span id="year"></span> AXI STUDIO LONDON</span>
+            <span class="footer-copy">Commercial photography services, events &amp; portrait photography.</span>
+          </div>
+          <div class="footer-social">
+            <a href="https://www.instagram.com/axistudioldn" target="_blank" rel="noreferrer" class="social-link">
+              Instagram
+            </a>
+            
+            <a href="mailto:info@axiphotography.com" class="social-link">
+              Email
+            </a>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
+    <script src="gallery.js"></script>
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Automatically fetch all image filenames from the /images folder
+      // via the backend endpoint and initialize the justified gallery.
+      window.addEventListener("DOMContentLoaded", () => {
+        fetch("/api/images")
+          .then((res) => res.json())
+          .then((paths) => {
+            if (window.initJustifiedGallery && Array.isArray(paths)) {
+              window.initJustifiedGallery("gallery-root", paths);
+            }
+          })
+          .catch((err) => {
+            console.error("Failed to load image list", err);
+          });
+      });
+    </script>
+  </body>
+</html>
+

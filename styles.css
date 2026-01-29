@@ -1,0 +1,333 @@
+:root {
+  --page-bg: #fcf8f2;
+  --page-surface: #ffffff;
+  --accent: #353535;
+  --text-main:rgb(0, 0, 0);
+  --text-muted:rgb(128, 107, 107);
+  --border-subtle: rgba(42, 15, 24, 0.06);
+  --shadow-soft: 0 14px 30px rgba(42, 15, 16, 0.06);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter",
+    "Segoe UI", sans-serif;
+  background: #fcf8f2;
+  color: var(--text-main);
+  min-height: 100vh;
+}
+
+.site {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: #fcf8f2;
+  border-bottom: 1px solid var(--border-subtle);
+  backdrop-filter: blur(18px);
+  min-height: 56px;
+  padding: 0.75rem clamp(1.25rem, 3vw, 3rem);
+}
+
+.site-footer {
+  padding: 0.9rem clamp(1.25rem, 3vw, 3rem);
+}
+
+.site-main {
+  padding: 1.5rem clamp(1.25rem, 3vw, 3rem) 2.5rem;
+  flex: 1;
+}
+
+.site-header-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.site-header .brand {
+  display: block;
+  width: 100%;
+}
+
+.brand-logo {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nav-link {
+  position: relative;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding-bottom: 0.3rem;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  transition: width 180ms ease-out;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.hero {
+  max-width: 1320px;
+  margin: 1.6rem auto 1.8rem;
+}
+
+.hero-content {
+  max-width: 720px;
+  padding: 0.8rem 0 0.5rem;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  margin: 0 0 0.35rem;
+  font-size: 0.8rem;
+  //text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+}
+
+.hero-title {
+  margin: 0 0 0.55rem;
+  font-size: clamp(1.95rem, 3vw, 2.7rem);
+  line-height: 1.08;
+}
+
+.hero-links {
+  margin-top: 0.9rem;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.hero-link {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  text-decoration: none;
+  color: var(--accent);
+  padding-bottom: 0.18rem;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.18);
+}
+
+.gallery-section {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.gallery-inner {
+  border-radius: 0;
+  padding: 0.4rem 0 2.5rem;
+}
+
+.justified-gallery {
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Let the plugin fully control rows and items; no custom .jg-* overrides */
+
+/* Lightbox / slideshow */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease-out;
+  z-index: 50;
+}
+
+.lightbox-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 96vw;
+  max-height: 92vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-image-wrapper {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.lightbox-image {
+  display: block;
+  max-width: 100%;
+  max-height: 92vh;
+  object-fit: contain;
+}
+
+.lightbox-prev,
+.lightbox-next {
+  position: absolute;
+  border: none;
+  background: none;
+  color: #f9fafb;
+  cursor: pointer;
+  font-size: 1.9rem;
+  padding: 0.25rem 0.75rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-prev {
+  left: 1.5rem;
+}
+
+.lightbox-next {
+  right: 1.5rem;
+}
+
+.lightbox-prev,
+.lightbox-next {
+  font-size: 2.4rem;
+}
+
+.lightbox-close:hover,
+.lightbox-prev:hover,
+.lightbox-next:hover {
+  color: #e5e7eb;
+}
+
+.site-footer {
+  border-top: 1px solid var(--border-subtle);
+  background: var(--page-surface);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.footer-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+}
+
+.footer-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.footer-brand {
+  font-weight: 500;
+  color: #343434;
+}
+
+.footer-copy {
+  font-size: 0.78rem;
+}
+
+.footer-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.social-link {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.social-link:hover {
+  color: var(--accent);
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (max-width: 768px) {
+  .site-header,
+  .site-main,
+  .site-footer {
+    padding-inline: 1.1rem;
+  }
+
+  .brand-logo {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 40px;
+    margin: 0 auto;
+    object-position: center center;
+  }
+
+  .hero {
+    margin-bottom: 1.5rem;
+  }
+
+  .gallery-inner {
+    padding: 0.4rem 0 1.6rem;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
